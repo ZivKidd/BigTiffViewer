@@ -70,7 +70,7 @@ namespace GPUImageViewer
             file_directory = System.IO.Path.GetDirectoryName(name);
             var all_files = new List<string>(Directory.GetFiles(file_directory).OrderBy(f => f));
 
-            var regex = new Regex(@".+\.(jpg|png)");
+            var regex = new Regex(@".+\.(jpg|png|jpeg|bmp)");
 
             filenames = all_files.Where(f => regex.IsMatch(f)).ToList();
             cursor = filenames.IndexOf(name);
@@ -147,6 +147,16 @@ namespace GPUImageViewer
                 case Key.Escape:
                     init_transform();
                     break;
+                case Key.X:
+                    cursor = (cursor + 1) % filenames.Count;
+                    update_from_cursor();
+                    break;
+                case Key.Z:
+                    cursor--;
+                    if (cursor < 0)
+                        cursor = filenames.Count - 1;
+                    update_from_cursor();
+                    break;
                 case Key.Right:
                     if (Keyboard.IsKeyDown(Key.LeftShift) || 
                         Keyboard.IsKeyDown(Key.RightShift))
@@ -186,25 +196,25 @@ namespace GPUImageViewer
                 return;
             if (!(Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift)))
             {
-                if (Keyboard.IsKeyDown(Key.Left))
+                if (Keyboard.IsKeyDown(Key.Left) || Keyboard.IsKeyDown(Key.A))
                 {
                     var m = image.RenderTransform.Value;
                     m.Translate(KEYBOARD_SPEED, 0.0);
                     image.RenderTransform = new MatrixTransform(m);
                 }
-                if (Keyboard.IsKeyDown(Key.Right))
+                if (Keyboard.IsKeyDown(Key.Right) || Keyboard.IsKeyDown(Key.D))
                 {
                     var m = image.RenderTransform.Value;
                     m.Translate(-KEYBOARD_SPEED, 0.0);
                     image.RenderTransform = new MatrixTransform(m);
                 }
-                if (Keyboard.IsKeyDown(Key.Up))
+                if (Keyboard.IsKeyDown(Key.Up) || Keyboard.IsKeyDown(Key.W))
                 {
                     var m = image.RenderTransform.Value;
                     m.Translate(0.0, KEYBOARD_SPEED);
                     image.RenderTransform = new MatrixTransform(m);
                 }
-                if (Keyboard.IsKeyDown(Key.Down))
+                if (Keyboard.IsKeyDown(Key.Down) || Keyboard.IsKeyDown(Key.S))
                 {
                     var m = image.RenderTransform.Value;
                     m.Translate(0.0, -KEYBOARD_SPEED);
