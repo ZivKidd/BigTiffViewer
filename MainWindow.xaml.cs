@@ -126,6 +126,7 @@ namespace GPUImageViewer
                         if (this.WindowStyle == WindowStyle.None)
                         {
                             this.WindowStyle = WindowStyle.SingleBorderWindow;
+                            this.ResizeMode = ResizeMode.CanResize;
                             this.WindowState = WindowState.Normal;                            
                             this.WindowState = WindowState.Maximized;
                             Mouse.OverrideCursor = null;
@@ -133,6 +134,7 @@ namespace GPUImageViewer
                         else
                         {
                             this.WindowStyle = WindowStyle.None;
+                            this.ResizeMode = ResizeMode.NoResize;
                             this.WindowState = WindowState.Normal;
                             this.WindowState = WindowState.Maximized;
                             Mouse.OverrideCursor = Cursors.None;
@@ -141,6 +143,7 @@ namespace GPUImageViewer
                     else
                     {
                         this.WindowStyle = WindowStyle.None;
+                        this.ResizeMode = ResizeMode.NoResize;
                         this.WindowState = WindowState.Maximized;
                     }
                     break;
