@@ -70,7 +70,7 @@ namespace GPUImageViewer
             file_directory = System.IO.Path.GetDirectoryName(name);
             var all_files = new List<string>(Directory.GetFiles(file_directory).OrderBy(f => f));
 
-            var regex = new Regex(@".+\.(jpg|png|jpeg|bmp)");
+            var regex = new Regex(@".+\.(jpg|png|jpeg|bmp)", RegexOptions.IgnoreCase);
 
             filenames = all_files.Where(f => regex.IsMatch(f)).ToList();
             cursor = filenames.IndexOf(name);
@@ -151,31 +151,23 @@ namespace GPUImageViewer
                     init_transform();
                     break;
                 case Key.X:
-                    cursor = (cursor + 1) % filenames.Count;
-                    update_from_cursor();
+                    next_picture();
                     break;
                 case Key.Z:
-                    cursor--;
-                    if (cursor < 0)
-                        cursor = filenames.Count - 1;
-                    update_from_cursor();
+                    prev_picture();
                     break;
                 case Key.Right:
                     if (Keyboard.IsKeyDown(Key.LeftShift) || 
                         Keyboard.IsKeyDown(Key.RightShift))
                     {
-                        cursor = (cursor + 1) % filenames.Count;
-                        update_from_cursor();
+                        next_picture();
                     }
                     break;
                 case Key.Left:
                     if (Keyboard.IsKeyDown(Key.LeftShift) ||
                         Keyboard.IsKeyDown(Key.RightShift))
                     {
-                        cursor--;
-                        if (cursor < 0)
-                            cursor = filenames.Count - 1;
-                        update_from_cursor();
+                        prev_picture();
                     }
                     break;
                 case Key.V:
@@ -184,6 +176,26 @@ namespace GPUImageViewer
                     else if (startmode == PICSTARTMODE.ORIGINALTOP)
                         startmode = PICSTARTMODE.FIT;
                     break;
+            }
+        }
+
+        private void next_picture()
+        {
+            if (filenames.Count > 0)
+            {
+                cursor = (cursor + 1) % filenames.Count;
+                update_from_cursor();
+            }
+        }
+
+        private void prev_picture()
+        {
+            if (filenames.Count > 0)
+            {
+                cursor--;
+                if (cursor < 0)
+                    cursor = filenames.Count - 1;
+                update_from_cursor();
             }
         }
 
