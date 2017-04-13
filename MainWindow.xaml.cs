@@ -145,6 +145,7 @@ namespace GPUImageViewer
                         this.WindowStyle = WindowStyle.None;
                         this.ResizeMode = ResizeMode.NoResize;
                         this.WindowState = WindowState.Maximized;
+                        Mouse.OverrideCursor = Cursors.None;
                     }
                     break;
                 case Key.Escape:
