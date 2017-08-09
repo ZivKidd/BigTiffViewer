@@ -33,6 +33,8 @@ namespace GPUImageViewer
             string[] args = Environment.GetCommandLineArgs();
             if (args.Length > 1)
                 open_filename(args[1]);
+
+            grid.Background = brushes[brush_index];
         }
 
         private string file_directory = null;
@@ -46,6 +48,9 @@ namespace GPUImageViewer
         };
 
         PICSTARTMODE startmode = PICSTARTMODE.FIT;
+
+        Brush[] brushes = new Brush[] { new SolidColorBrush(Colors.White), new SolidColorBrush(Colors.Black) };
+        int brush_index = 0;
 
         public static ImageSource BitmapFromUri(Uri source)
         {
@@ -176,6 +181,10 @@ namespace GPUImageViewer
                         startmode = PICSTARTMODE.ORIGINALTOP;
                     else if (startmode == PICSTARTMODE.ORIGINALTOP)
                         startmode = PICSTARTMODE.FIT;
+                    break;
+                case Key.B:
+                    brush_index = (brush_index + 1 == brushes.Length) ? 0 : brush_index + 1;
+                    grid.Background = brushes[brush_index];
                     break;
             }
         }

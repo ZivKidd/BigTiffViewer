@@ -9,7 +9,7 @@
         Drop="Window_Drop" AllowDrop="True"
         MouseWheel="image_MouseWheel" MouseMove="image_MouseMove" 
         MouseLeftButtonDown="image_MouseLeftButtonDown" MouseLeftButtonUp="image_MouseLeftButtonUp" KeyDown="Window_KeyDown">
-    <Grid x:Name="grid" Background="Black">
+    <Grid x:Name="grid" Background="White">
         <Image x:Name="image" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
     </Grid>
 </Window>
