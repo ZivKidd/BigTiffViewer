@@ -26,7 +26,7 @@ namespace GPUImageViewer
         public MainWindow()
         {
             InitializeComponent();
-            timer.Interval = new TimeSpan(200000);
+            timer.Interval = new TimeSpan(100000);
             timer.Tick += new EventHandler(handle_timer);
             timer.Start();
 
@@ -84,8 +84,13 @@ namespace GPUImageViewer
         private void image_MouseWheel(object sender, MouseWheelEventArgs e)
         {
             Point p = e.MouseDevice.GetPosition(image);
-            var m = image.RenderTransform.Value;
             double zoom = e.Delta > 0 ? .2 : -.2;
+            perform_zoom(p, zoom);
+        }
+
+        private void perform_zoom(Point p, double zoom)
+        {
+            var m = image.RenderTransform.Value;
             m.ScaleAtPrepend(1.0 + zoom, 1.0 + zoom, p.X, p.Y);
             image.RenderTransform = new MatrixTransform(m);
         }
@@ -209,9 +214,19 @@ namespace GPUImageViewer
             }
         }
 
+        private Point get_image_center_global()
+        {
+            var m = image.RenderTransform.Value;
+            var im = m;
+            im.Invert();
+            Point p = im.Transform(new Point(image.ActualWidth / 2.0, image.ActualHeight / 2.0));
+            return p;
+        }
+
         DispatcherTimer timer = new DispatcherTimer();
 
-        const double KEYBOARD_SPEED = 20.0;
+        const double KEYBOARD_SPEED = 12.5;
+        const double KEYBOARD_ZOOM_SPEED = 0.03;
 
         private void handle_timer(object sender, EventArgs args)
         {
@@ -244,6 +259,16 @@ namespace GPUImageViewer
                     var m = image.RenderTransform.Value;
                     m.Translate(0.0, -KEYBOARD_SPEED);
                     image.RenderTransform = new MatrixTransform(m);
+                }
+                if (Keyboard.IsKeyDown(Key.Q))
+                {
+                    Point p = get_image_center_global();
+                    perform_zoom(p, -KEYBOARD_ZOOM_SPEED);
+                }
+                if (Keyboard.IsKeyDown(Key.E))
+                {
+                    Point p = get_image_center_global();
+                    perform_zoom(p, KEYBOARD_ZOOM_SPEED);
                 }
             }
         }
