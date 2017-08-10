@@ -35,6 +35,7 @@ namespace GPUImageViewer
                 open_filename(args[1]);
 
             grid.Background = brushes[brush_index];
+            RenderOptions.SetBitmapScalingMode(image, BitmapScalingMode.HighQuality);
         }
 
         private string file_directory = null;
