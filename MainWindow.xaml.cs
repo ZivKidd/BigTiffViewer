@@ -50,7 +50,10 @@ namespace GPUImageViewer
 
         PICSTARTMODE startmode = PICSTARTMODE.FIT;
 
-        Brush[] brushes = new Brush[] { new SolidColorBrush(Colors.White), new SolidColorBrush(Colors.Black) };
+        Brush[] brushes = new Brush[] {
+            new SolidColorBrush(Colors.Gray),
+            new SolidColorBrush(Colors.Black),
+            new SolidColorBrush(Colors.White)};
         int brush_index = 0;
 
         public static ImageSource BitmapFromUri(Uri source)
