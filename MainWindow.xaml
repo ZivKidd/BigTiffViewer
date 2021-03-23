@@ -5,10 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GPUImageViewer"
         mc:Ignorable="d"
-        Title="GPUImageViewer" Height="600" Width="800"
+        Title="BigTiffViewer"
         Drop="Window_Drop" AllowDrop="True"
-        MouseWheel="image_MouseWheel" MouseMove="image_MouseMove" 
-        MouseLeftButtonDown="image_MouseLeftButtonDown" MouseLeftButtonUp="image_MouseLeftButtonUp" KeyDown="Window_KeyDown">
+        WindowState="Maximized"
+        MouseMove="image_MouseMove" PreviewMouseWheel="image_MouseWheel"
+        MouseLeftButtonDown="image_MouseLeftButtonDown" MouseLeftButtonUp="image_MouseLeftButtonUp">
     <Grid x:Name="grid" Background="White">
         <Image x:Name="image" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
     </Grid>
