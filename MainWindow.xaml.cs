@@ -5,13 +5,11 @@
     using System.Windows.Input;
     using System.Windows.Media;
     using System.Windows.Media.Imaging;
-    using System.Windows.Threading;
 
     using BitMiracle.LibTiff.Classic;
 
     public partial class MainWindow : Window
     {
-
         // 原始bigtiff的高宽
         private int bigTiffHeight;
 
@@ -20,9 +18,6 @@
         private bool dragging;
 
         private string filePath;
-
-        // 读入预览影像宽/真实影像宽
-        private double imageZoom;
 
         private Point old_pos;
 
@@ -62,6 +57,10 @@
             if (this.dragging)
             {
                 Point new_pos = e.GetPosition(this.grid);
+                //坐标从grid坐标系转移到图像坐标系
+                //先把grid里的坐标便宜转换为比例
+                //然后乘以当前展示的图像区域
+                //然后加上当前的坐标偏移
                 double deltax = new_pos.X - this.old_pos.X;
                 double deltay = new_pos.Y - this.old_pos.Y;
                 deltax /= this.grid.ActualWidth;
@@ -215,7 +214,7 @@
         }
 
         /// <summary>
-        /// 从一张大的tif读取一部分，当区域的宽高大于需要的宽高时会进行采样以进行更快地读取
+        ///     从一张大的tif读取一部分，当区域的宽高大于需要的宽高时会进行采样以进行更快地读取
         /// </summary>
         /// <param name="name"></param>
         /// <param name="x0"></param>
